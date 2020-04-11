@@ -28,6 +28,7 @@ const OrderingModal = createReactClass({
     confirm() {
         var data = [];
         this.props.orderItem.quantity = this.state.quantity;
+        this.props.orderItem.status = 'Pending';
         this.props.orderItem.date = this.getCurrentDate('-');
         var savedobject = JSON.parse(localStorage.getItem("orderedItems"));
         if (savedobject) {
@@ -53,6 +54,7 @@ const OrderingModal = createReactClass({
     handleChange(event) {
         this.setState({ quantity: event.target.value });
     },
+
     canBeSubmitted() {
         const errors = validate(this.state.quantity);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
@@ -80,7 +82,6 @@ const OrderingModal = createReactClass({
                         <label>
                             Quantity : <input type="number" className={errors.quantity ? "error" : ""} name="quantity" onChange={this.handleChange} required/>
                         </label>
-                     
                     </Modal.Body>
                     <Modal.Footer>
                         <Button disabled={isDisabled} onClick={this.confirm}>Confim</Button>

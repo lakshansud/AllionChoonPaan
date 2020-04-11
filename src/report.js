@@ -17,12 +17,13 @@ export default class ReportForm extends React.Component {
         var savedOrder = JSON.parse(localStorage.getItem("orderedItems"));
         if (savedOrder) {
             return savedOrder.map((item,index) => {
-                const { id, name, quantity,date } = item;
+                const { id, name, quantity,date,status } = item;
                 return (
                     <tr key={index}>
                         <td>{name}</td>
                         <td className="text-right">{quantity}</td>
                         <td>{date}</td>
+                        <td>{status}</td>
                     </tr>
                 );
             });
@@ -44,6 +45,7 @@ export default class ReportForm extends React.Component {
                             <th width="50%">Name</th>
                             <th width="10%" className="text-right">Quantity</th>
                             <th width="20%">Ordered Date</th>
+                            <th width="20%">Status</th>
                         </tr>
                     </thead>
                     <tbody>

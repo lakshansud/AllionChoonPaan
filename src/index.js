@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import FoodOrderingForm from './foodordering';
 import ReportForm from './report';
+import PrivateRoute from './component/login.component/login';
+import LoginPage  from './component/login.component/loginpage';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,7 +11,10 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
     Link,
+    useHistory,
+    useLocation,
     useParams
 } from "react-router-dom";
 
@@ -19,6 +24,10 @@ class App extends Component {
         this.state = {
             name: 'React'
         };
+        var loggedUser = localStorage.getItem("LoggedUser");
+        if (!loggedUser) {
+            //todo
+        }
     }
 
     render() {
@@ -44,16 +53,21 @@ class App extends Component {
                     </nav>
                 </header >
                 <div className="container-fluid">
-            
-                        <Switch>
-                            <Route path="/Order" children={<FoodOrderingForm />} />
-                            <Route path="/Report" children={<ReportForm />} />
-                        </Switch>
-          
+                    <Switch>
+                        <PrivateRoute path="/Order">
+                            <FoodOrderingForm />
+                        </PrivateRoute>
+                        <PrivateRoute path="/Report">
+                            <ReportForm />
+                        </PrivateRoute>
+                        <Route path="/Login" children={<LoginPage />} />
+                    </Switch>
+
                 </div>
             </Router>
         );
     }
 }
+
 
 render(<App />, document.getElementById('root'));

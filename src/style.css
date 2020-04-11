@@ -68,6 +68,19 @@ h1, p {
     display: none;
 }
 
-    .modal-container.modal-container-active {
+.modal-container.modal-container-active {
         display: block;
-    }
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
