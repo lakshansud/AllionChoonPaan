@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import FoodOrderingForm from './foodordering';
 import ReportForm from './report';
 import PrivateRoute from './component/login.component/login';
+import fakeAuth from './component/login.component/auth';
 import LoginPage  from './component/login.component/loginpage';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,12 +23,16 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            name: 'React'
+            name: 'React',
+            loggedUser:''
         };
         var loggedUser = localStorage.getItem("LoggedUser");
-        if (!loggedUser) {
-            //todo
+        if (loggedUser) {
+            this.state.loggedUser = loggedUser;
+        } else {
+            this.state.loggedUser = "";
         }
+        
     }
 
     render() {
@@ -40,34 +45,47 @@ class App extends Component {
                             <div className="navbar-collapse collapse d-sm-inline-flex justify-content-lg-between ">
                                 <ul className="navbar-nav flex-grow pl-5">
                                     <li className="nav-item pl-5">
-                                        <Link to="/Order">Order</Link>
+                                        <Link to="/order">Order</Link>
                                     </li>
                                     <li className="nav-item pl-5">
-                                        <Link to="/Report">Report</Link>
+                                        <Link to="/report">Report</Link>
                                     </li>
                                 </ul>
 
                             </div>
-                            <div className="text-right">User</div>
+                            <div className=" pr-5 text-right">{ this.state.loggedUser }</div>
+                            <AuthButton />
                         </div>
                     </nav>
                 </header >
                 <div className="container-fluid">
                     <Switch>
-                        <PrivateRoute path="/Order">
+                        <PrivateRoute path="/order">
                             <FoodOrderingForm />
                         </PrivateRoute>
-                        <PrivateRoute path="/Report">
+                        <PrivateRoute path="/report">
                             <ReportForm />
                         </PrivateRoute>
-                        <Route path="/Login" children={<LoginPage />} />
+                        <Route path="/login" children={<LoginPage />} />
                     </Switch>
-
                 </div>
             </Router>
         );
     }
 }
 
+
+function AuthButton() {
+    let history = useHistory();
+    return (
+        <button
+            onClick={() => {
+                fakeAuth.signout(() => history.push("/login"));
+            }}
+        >
+            Sign out
+      </button>
+        );
+}
 
 render(<App />, document.getElementById('root'));
