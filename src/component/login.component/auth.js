@@ -18,6 +18,7 @@ const fakeAuth = {
         setTimeout(cb, 100); // fake async
     },
     signout(cb) {
+        localStorage.removeItem("LoggedUser");
         fakeAuth.isAuthenticated = false;
         setTimeout(cb, 100);
     }

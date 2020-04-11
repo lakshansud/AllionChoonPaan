@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import FoodOrderingForm from './foodordering';
 import ReportForm from './report';
-import PrivateRoute from './component/login.component/login';
+import PrivateRoute from './component/login.component/authguard';
+import SignOutButton from './component/login.component/signout';
 import fakeAuth from './component/login.component/auth';
 import LoginPage  from './component/login.component/loginpage';
 import './style.css';
@@ -54,7 +55,7 @@ class App extends Component {
 
                             </div>
                             <div className=" pr-5 text-right">{ this.state.loggedUser }</div>
-                            <AuthButton />
+                            <SignOutButton />
                         </div>
                     </nav>
                 </header >
@@ -74,18 +75,5 @@ class App extends Component {
     }
 }
 
-
-function AuthButton() {
-    let history = useHistory();
-    return (
-        <button
-            onClick={() => {
-                fakeAuth.signout(() => history.push("/login"));
-            }}
-        >
-            Sign out
-      </button>
-        );
-}
 
 render(<App />, document.getElementById('root'));
