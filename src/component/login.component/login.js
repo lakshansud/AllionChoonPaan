@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import fakeAuth from './test';
+import fakeAuth from './auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {

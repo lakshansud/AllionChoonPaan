@@ -9,20 +9,25 @@ import {
     useLocation,
     useParams
 } from "react-router-dom";
-import fakeAuth from './test';
+import fakeAuth from './auth';
 import Background from '../../assert/images/login_cover.jpg';
 
 function LoginPage() {
     let history = useHistory();
     let location = useLocation();
     let nameInput = React.createRef();
+    const setFocus = () => { nameInput.current && nameInput.current.focus(); };
 
     let { from } = location.state || { from: { pathname: "/" } };
     let login = (event) => {
-        localStorage.setItem("LoggedUser", nameInput.current.value);
-        fakeAuth.authenticate(() => {
-            history.replace(from);
-        });
+        if (nameInput.current !== null && nameInput.current.value.length > 0) {
+            localStorage.setItem("LoggedUser", nameInput.current.value);
+            fakeAuth.authenticate(() => {
+                history.replace(from);
+            });
+        } else {
+            setFocus();
+        }
     };
 
     return (
@@ -34,7 +39,7 @@ function LoginPage() {
                             Login to continue
 					</span>
                         <div className="wrap-input100 validate-input">
-                            <input className="input100" type="text" ref={nameInput} name="name"  />
+                            <input className="input100" type="text" ref={nameInput} name="name" required/>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Name</span>
                         </div>
@@ -52,7 +57,5 @@ function LoginPage() {
         </div>
                 );
 }
-
-
 
 export default LoginPage;
